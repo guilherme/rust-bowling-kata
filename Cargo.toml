@@ -1,0 +1,6 @@
+[package]
+name = "bowling-kata"
+version = "0.1.0"
+authors = ["Guilherme Reis Campos <guilhermekbsa@gmail.com>"]
+
+[dependencies]
