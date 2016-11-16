@@ -1,7 +1,4 @@
-use std::cell::Cell; // TODO: what are downsides and upsides of this?
-// TODO:
-// DEFAULT VALUE FOR SCORE ?
-// CONSTRUCTORS?
+use std::cell::Cell;
 struct Game {
   rolls: Vec<usize>,
   current_roll: Cell<usize>,
@@ -47,27 +44,24 @@ fn main() {
 mod tests {
 
   use super::Game;
-  // TODO: 
-  // SET-UP/TEARDOWN ??
 
-  fn roll_many(mut game: Game, times: usize, pin_value: usize) -> Game {
+  fn roll_many(game: &mut Game, times: usize, pin_value: usize)  {
     for _ in 0..times {
       game.roll(pin_value);
     }
-    return game;
   }
 
   #[test]
   fn it_runs_the_game() {
     let mut game = Game::new();
-    game = roll_many(game, 20, 0);
+    roll_many(&mut game, 20, 0);
     assert_eq!(0, game.score());
   }
 
   #[test]
   fn it_test_all_ones() {
     let mut game = Game::new();
-    game = roll_many(game, 20, 1);
+    roll_many(&mut game, 20, 1);
     assert_eq!(20, game.score());
   }
 
@@ -77,7 +71,7 @@ mod tests {
     game.roll(5);
     game.roll(5);
     game.roll(3);
-    game = roll_many(game, 17, 0);
+    roll_many(&mut game, 17, 0);
     assert_eq!(16, game.score());
   }
 
@@ -88,7 +82,7 @@ mod tests {
     game.roll(10);
     game.roll(3);
     game.roll(4);
-    game = roll_many(game, 16, 0); // DONT KNOW WHY I HAD TO DO THIS. MAKE THE GAME MUTABLE AND THIS FUNCTION THAT MUTATES THE GAME NEEDS TO RETURN ITSELF. I WONDER IF THERES ALTERNATIVE FOR THIS.
+    roll_many(&mut game, 16, 0);
     assert_eq!(24, game.score());
   }
 
@@ -96,7 +90,7 @@ mod tests {
   #[test]
   fn test_perfect_game() {
     let mut game = Game::new();
-    game = roll_many(game, 12, 10); // DONT KNOW WHY
+    roll_many(&mut game, 12, 10);
     assert_eq!(300, game.score());
   }
 }
